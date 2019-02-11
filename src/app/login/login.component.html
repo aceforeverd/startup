@@ -1,9 +1,23 @@
-<div>
-  <mat-form-field>
-    <input matInput placeholder="Email" [(value)]="email">
+<form class="login-component" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <mat-form-field class="login-field">
+    <mat-icon matPrefix>email</mat-icon>
+    <input matInput placeholder="Email" type="email" formControlName="email" [errorStateMatcher]="matcher" required>
+    <mat-error *ngIf="getEmailControl().hasError('email') && !getEmailControl().hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="getEmailControl().hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <input matInput type="password" placeholder="Password" [(value)]="password">
+  <mat-form-field class="login-field">
+    <mat-icon matPrefix>vpn_key</mat-icon>
+    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password" [errorStateMatcher]="matcher" required>
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    <mat-error *ngIf="getPasswordControl().hasError('required')">
+      Password required
+    </mat-error>
   </mat-form-field>
-</div>
+
+  <button mat-button type="submit" [disabled]="!formGroup.valid">Login</button>
+</form>

@@ -4,7 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
-import { MatInputModule} from "@angular/material";
+import {
+  ErrorStateMatcher, MatButtonModule,
+  MatFormFieldModule, MatIconModule,
+  MatInputModule,
+  ShowOnDirtyErrorStateMatcher
+} from "@angular/material";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -14,9 +20,17 @@ import { MatInputModule} from "@angular/material";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatInputModule
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{
+    provide: ErrorStateMatcher,
+    useClass: ShowOnDirtyErrorStateMatcher
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
